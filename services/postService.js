@@ -77,7 +77,7 @@ exports.getPostBySlug = async req => {
   const {
     rows: [post],
   } = await db.query(
-    `SELECT title, content, slug, users.username AS created_by
+    `SELECT posts.id, title, content, slug, users.username AS created_by
     FROM posts INNER JOIN users ON users.id = posts.created_by 
     WHERE slug = $1`,
     [slug]

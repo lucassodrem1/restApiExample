@@ -63,9 +63,9 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode ? err.statusCode : 500;
   err.status = err.status ? err.status : 'error';
 
-  // if (process.env.NODE_ENV === 'development') {
-  //   return sendDevError(err, res);
-  // }
+  if (process.env.NODE_ENV === 'development') {
+    return sendDevError(err, res);
+  }
 
   let error = Object.assign(err);
   if (error.code === '22P02') error = handleInvalidInputDB(err);
