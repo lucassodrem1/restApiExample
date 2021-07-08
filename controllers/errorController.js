@@ -50,6 +50,25 @@ const handleInvalidInputDB = err => {
 };
 
 /**
+ * Tratar erro de valores duplicados
+ * no banco de dados.
+ * @param {import('express').Errback} err
+ * @returns {AppError}
+ */
+const handleDuplicateFieldsDB = err => {
+  const regex = /\(([^)]+)\)/;
+  const matches = err.detail.match(regex);
+
+  let errorMessage = `${matches[1]} já existe! Por favor use outro valor`;
+
+  // Verificar se o campo duplicado é slug e gerar uma resposta adequado ao usuário.
+  if (matches[1] === 'slug')
+    errorMessage = `Slug gerado a partir do título já existe. Por favor, use outro título.`;
+
+  return new AppError(errorMessage, 400);
+};
+
+/**
  * Middleware para exebir erros
  * dependendo do ambiente que a
  * aplicação esteja rodando.
@@ -69,6 +88,6 @@ module.exports = (err, req, res, next) => {
 
   let error = Object.assign(err);
   if (error.code === '22P02') error = handleInvalidInputDB(err);
-
+  if (error.code === '23505') error = handleDuplicateFieldsDB(error);
   sendProdError(error, res);
 };

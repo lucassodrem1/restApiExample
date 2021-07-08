@@ -11,7 +11,7 @@ CREATE TABLE posts (
   id SERIAL,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
-  slug TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
   created_by INT NOT NULL,
   FOREIGN KEY (created_by)
     REFERENCES users (id)
