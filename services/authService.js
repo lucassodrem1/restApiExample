@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const AppError = require('../utils/AppError');
 const db = require('../db');
 
+/**
+ * Gerar JWT e gravar no cookie do cliente.
+ * @param {Number} userId ID do usuário.
+ * @param {import('express').Response} res
+ * @returns {String} JWT gerado.
+ */
 const createSendToken = (userId, res) => {
   const token = jwt.sign({ id: userId }, process.env.JWT_TOKEN, {
     expiresIn: process.env.JWT_EXPIRES_IN,
@@ -23,6 +29,14 @@ const createSendToken = (userId, res) => {
   return token;
 };
 
+/**
+ * Autenticar usuário.
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @throws {AppError} 400 Campos necessários não passados.
+ * @throws {AppError} 401 Usuário ou senha incorreta.
+ * @returns {String} JWT gerado para este usuário.
+ */
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
@@ -42,6 +56,14 @@ exports.login = async (req, res) => {
   return createSendToken(user.id, res);
 };
 
+/**
+ * Middleware para verificar se o usuário está
+ * autenticado no momento.
+ * @param {import('express').Request} req
+ * @throws {AppError} 401 Usuário não logado.
+ * @throws {AppError} 401 Usuário não mais existente.
+ * @returns {Object} Dados do usuário autenticado.
+ */
 exports.protect = async req => {
   let token;
 

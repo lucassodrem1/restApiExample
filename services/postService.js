@@ -2,6 +2,14 @@ const slugify = require('slugify');
 const AppError = require('../utils/AppError');
 const db = require('../db');
 
+/**
+ * Filtrar objeto enviado pelo cliente
+ * para permitir apenas os campos que
+ * são permitidos pelo servidor.
+ * @param {Object} obj Objeto passado pelo cliente.
+ * @param  {...String} allowedFields Campos permitidos.
+ * @returns
+ */
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
 
@@ -14,6 +22,11 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
+/**
+ * Retornar todos os posts existentes.
+ * @param {import('express').Request} req
+ * @returns {Array} Array com todos os posts.
+ */
 exports.getPosts = async req => {
   const { rows: posts } = await db.query(
     `SELECT posts.id, posts.title, posts.content, posts.slug, users.username AS created_by 
@@ -23,6 +36,11 @@ exports.getPosts = async req => {
   return posts;
 };
 
+/**
+ * Persistir um novo post no banco de dados.
+ * @param {import('express').Request} req
+ * @throws {AppError} 400 Campos necessários não especificados.
+ */
 exports.addPost = async req => {
   const { title, content } = req.body;
 
@@ -44,6 +62,13 @@ exports.addPost = async req => {
   );
 };
 
+/**
+ * Retornar post referente ao slug passado.
+ * @param {import('express').Request} req
+ * @throws {AppError} 400 Slug não passado.
+ * @throws {AppError} 404 Nenhum post encontrado.
+ * @returns {Object} Post referente ao slug.
+ */
 exports.getPostBySlug = async req => {
   const { slug } = req.params;
 
@@ -63,12 +88,22 @@ exports.getPostBySlug = async req => {
   return post;
 };
 
+/**
+ * Atualizar informações PERMITIDAS do
+ * usuário referente ao ID passado.
+ * @param {import('express').Request} req
+ * @throws {AppError} 400 Não passar nenhum objeto.
+ * @throws {AppError} 404 Caso não seja encontrado nenhum post.
+ */
 exports.updatePostById = async req => {
   const fields = [];
   const values = [req.params.id];
 
   // 1. Filtrar campos permitidos para atualizar.
   const filteredObj = filterObj(req.body, 'title', 'content');
+
+  if (!filteredObj.length)
+    throw new AppError('Você não especificou nenhum campo para alterar.', 400);
 
   // 2. Formatar valores para usar como query.
   Object.entries(filteredObj).forEach(([key, value], i) => {
@@ -97,6 +132,11 @@ exports.updatePostById = async req => {
   if (!rowCount) throw new AppError('Post não encontrado.', 404);
 };
 
+/**
+ * Deletar post por ID.
+ * @param {import('express').Request} req
+ * @throws {AppError} 404 Caso não seja encontrado nenhum post.
+ */
 exports.deletePostById = async req => {
   const { id } = req.params;
 

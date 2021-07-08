@@ -16,4 +16,13 @@ pool
   })
   .catch(err => console.log(err));
 
+/**
+ * Método usado para reunir todas as chamadas
+ * de query, permitindo que sejam definidas regras
+ * nesse método e assim, essas regras irão servir
+ * para todas as chamadas na aplicação inteira.
+ * @param {String} text Query passada.
+ * @param {Array} param Array de valores.
+ * @returns {Promise} Resultado da query.
+ */
 exports.query = (text, param) => pool.query(text, param);
