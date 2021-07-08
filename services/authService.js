@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const AppError = require('../utils/AppError');
 const db = require('../db');
 
 const createSendToken = (userId, res) => {
@@ -25,16 +26,18 @@ const createSendToken = (userId, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
-  // Verificar se existe username e password.
+  if (!username || !password)
+    throw new AppError('Usuário e senha são obrigatórios.', 400);
 
   const {
     rows: [user],
-  } = await db.query('SELECT id, password FROM users WHERE username = $1', [
-    username,
-  ]);
+  } = await db.query(
+    'SELECT id, password_hash FROM users WHERE username = $1',
+    [username]
+  );
 
-  // Verificar se achou user.
-  // console.log(await bcrypt.compare(password, user.password));
+  if (!user || !(await bcrypt.compare(password, user.password_hash)))
+    throw new AppError('Usuário ou senha incorreta.', 401);
 
   return createSendToken(user.id, res);
 };
