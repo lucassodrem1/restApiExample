@@ -41,3 +41,34 @@ exports.login = async (req, res) => {
 
   return createSendToken(user.id, res);
 };
+
+exports.protect = async req => {
+  let token;
+
+  // 1. Verificar se jwt existe.
+  if (req.cookies.jwt) token = req.cookies.jwt;
+
+  if (!token)
+    throw new AppError(
+      'Você não está logado. Por favor, faça o login para prosseguir.',
+      401
+    );
+
+  token = req.cookies.jwt;
+
+  // 2. Verificar se jwt é válido.
+  const decoded = jwt.verify(token, process.env.JWT_TOKEN);
+
+  // 3. Verificar se usuário existe.
+  const {
+    rows: [user],
+  } = await db.query('SELECT id FROM users WHERE id = $1', [decoded.id]);
+
+  if (!user)
+    throw new AppError(
+      'O usuário que pertencia a este token não existe mais.',
+      401
+    );
+
+  return user;
+};

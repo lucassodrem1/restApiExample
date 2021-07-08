@@ -6,6 +6,13 @@ exports.login = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    token,
+    data: token,
   });
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+  const user = await authService.protect(req);
+
+  req.user = user;
+  next();
 });
