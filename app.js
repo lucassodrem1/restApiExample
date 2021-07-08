@@ -14,7 +14,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/posts', postRouter);
 
 app.all('*', (req, res, next) =>
-  next(new AppError('Parece que essa rota não existe... :(', 500))
+  next(new AppError('Parece que essa rota não existe... :(', 404))
 );
 
 app.use(errorController);
