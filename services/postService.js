@@ -102,7 +102,7 @@ exports.updatePostById = async req => {
   // 1. Filtrar campos permitidos para atualizar.
   const filteredObj = filterObj(req.body, 'title', 'content');
 
-  if (!filteredObj.length)
+  if (!Object.keys(filteredObj).length)
     throw new AppError('Você não especificou nenhum campo para alterar.', 400);
 
   // 2. Formatar valores para usar como query.
