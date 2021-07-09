@@ -10,15 +10,11 @@ REST API feita em Node.js, utlizando postregreSQL como banco de dados.
 
 `https://app.swaggerhub.com/apis-docs/lucassodrem1/Rest-API-Example/1.0.0/`
 
-## Importar Requisições
-
-Baixe o arquivo `assets/RestAPIExample.collection.json` e importe no seu programa de API Client(Postman, Insomnia, etc.) preferido para ter todas as requisições.
-
 ## Passo a passo
 
 Passo a passo de como rodar a aplicação em ambiente de desenvolvimento ou produção.
 
-1. Faça o download do json das requisições para importar no seu API Client;
+1. Importe as requisições no seu programa de API Client(Postman, Insomnia, etc.) usando o arquivo `assets/RestAPIExample.collection.json`;
 2. Crie um database com o nome de `restapiexample`;
 3. Execute `npm i` para instalar as dependências;
 4. Execute `npm run up` para popular o banco com a migration;
