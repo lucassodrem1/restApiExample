@@ -5,17 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "SET NODE_ENV=production&&node server.js",
+    "start:docker": "NODE_ENV=production nodemon server.js",
     "start:dev": "nodemon server.js",
     "migrate": "node-pg-migrate",
     "up": "SET DATABASE_URL=postgres://postgres:root@localhost:5432/restapiexample&&npm run migrate up",
     "up:test": "SET DATABASE_URL=postgres://postgres:root@localhost:5432/testrestapiexample&&npm run migrate up",
-    "test": "npm run up:test&&jest"
+    "test": "npm run up:test&&jest",
+    "up:dockerTest": "DATABASE_URL=postgres://postgres:root@restapiexample_db_1:5432/testrestapiexample npm run migrate up",
+    "test:docker": "npm run up:dockerTest&&jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
