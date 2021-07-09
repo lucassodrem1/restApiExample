@@ -3,8 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
 /**
- * Tratamento de exceptions para que
- * a aplicação em produção não morra.
+ * Tratamento de exceptions.
  */
 process.on('uncaughtException', err => {
   console.log('Uncaught Exception!');
@@ -21,8 +20,8 @@ const server = app.listen(process.env.PORT, () =>
 
 /**
  * Tratamento de promises não tratadas
- *  para que a aplicação em produção
- * não morra.
+ * para que o servidor, quando em produção,
+ * restartar ao dar unhandled rejection.
  */
 process.on('unhandledRejection', () => {
   console.log('Unhandled Rejection!');
