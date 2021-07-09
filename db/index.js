@@ -1,20 +1,19 @@
 const { Pool } = require('pg');
+let connectionString = process.env.DATABASE_URL;
+
+if (process.env.NODE_ENV === 'test')
+  connectionString = process.env.TEST_DATABASE_URL;
 
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString,
 });
 
-pool
-  .connect()
-  .then(client => {
-    console.log('DB connected!');
-    client.release();
-  })
-  .catch(err => console.log(err));
+pool.connect();
+//   .then(client => {
+//     console.log('DB connected!');
+//     client.release();
+//   })
+//   .catch(err => console.log(err));
 
 /**
  * Método usado para reunir todas as chamadas
