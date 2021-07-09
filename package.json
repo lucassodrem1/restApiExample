@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "SET NODE_ENV=production&&node server.js",
-    "start:docker": "NODE_ENV=production nodemon server.js",
+    "start:docker": "NODE_ENV=production TEST_ENV=docker nodemon server.js",
     "start:dev": "nodemon server.js",
     "migrate": "node-pg-migrate",
     "up": "SET DATABASE_URL=postgres://postgres:root@localhost:5432/restapiexample&&npm run migrate up",

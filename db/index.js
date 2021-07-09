@@ -1,19 +1,21 @@
 const { Pool } = require('pg');
-let connectionString = process.env.DOCKER_DATABASE_URL;
 
-if (process.env.NODE_ENV === 'development') {
+let connectionString;
+
+if (process.env.NODE_ENV === 'production' && process.env.TEST_ENV === 'local')
   connectionString = process.env.DATABASE_URL;
-} else if (
-  process.env.NODE_ENV === 'test' &&
-  process.env.TEST_ENV === 'local'
-) {
+
+if (process.env.NODE_ENV === 'development')
+  connectionString = process.env.DATABASE_URL;
+
+if (process.env.NODE_ENV === 'production' && process.env.TEST_ENV === 'docker')
+  connectionString = process.env.DOCKER_DATABASE_URL;
+
+if (process.env.NODE_ENV === 'test' && process.env.TEST_ENV === 'local')
   connectionString = process.env.TEST_DATABASE_URL;
-} else if (
-  process.env.NODE_ENV === 'test' &&
-  process.env.TEST_ENV === 'docker'
-) {
+
+if (process.env.NODE_ENV === 'test' && process.env.TEST_ENV === 'docker')
   connectionString = process.env.DOCKER_TEST_DATABASE_URL;
-}
 
 const pool = new Pool({
   connectionString,
