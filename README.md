@@ -18,9 +18,8 @@ Passo a passo de como rodar a aplicação em ambiente de desenvolvimento ou prod
 2. Crie um database com o nome de `restapiexample`;
 3. Execute `npm i` para instalar as dependências;
 4. Execute `npm run up` para popular o banco com a migration;
-5. Para iniciar o servidor em ambiente de produção, use: `npm start`. Para desenvolvimento, use: `npm run start:dev`.
-
-E... pronto! Sua aplicação já está pronta! \\(^o^)/
+5. Para iniciar o servidor em ambiente de produção, use: `npm start`. Para desenvolvimento, use: `npm run start:dev` e...
+   ...pronto! Sua aplicação já está pronta! \\(^o^)/
 
 ## Testes
 
@@ -34,8 +33,15 @@ Passo a passo para rodar testes da aplicação.
 `https://hub.docker.com/r/lucassodrem/rest-api-example`
 
 1. Dê o pull nas 3 imagens do repositório acima;
-2. Execute o comando `dock-composer up` para montar o container
 
-E... pronto! Sua aplicação já está pronta! \\(^o^)/
+   - `docker pull lucassodrem/rest-api-example:app`
+   - `docker pull lucassodrem/rest-api-example:db`
+   - `docker pull lucassodrem/rest-api-example:adminer`
+
+2. Execute o comando `dock-composer up` para executar o container;
+3. Crie a tabela `restapiexample`e `testrestapiexample` na imagem do db;
+4. Execute o passo **2** novamente e execute o comando `npm run up:docker` para rodar a migration e...
+
+...pronto! Sua aplicação já está pronta! \\(^o^)/
 
 Obs: Caso queira fazer testes dentro do composer, use o comando `TEST_ENV=docker npm run test:docker`.
