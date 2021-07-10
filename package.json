@@ -11,6 +11,7 @@
     "up": "SET DATABASE_URL=postgres://postgres:root@localhost:5432/restapiexample&&npm run migrate up",
     "up:test": "SET DATABASE_URL=postgres://postgres:root@localhost:5432/testrestapiexample&&npm run migrate up",
     "test": "npm run up:test&&jest",
+    "up:docker": "DATABASE_URL=postgres://postgres:root@restapiexample_db_1:5432/restapiexample npm run migrate up",
     "up:dockerTest": "DATABASE_URL=postgres://postgres:root@restapiexample_db_1:5432/testrestapiexample npm run migrate up",
     "test:docker": "npm run up:dockerTest&&jest"
   },
