@@ -15,10 +15,11 @@ REST API feita em Node.js, utlizando postregreSQL como banco de dados.
 Passo a passo de como rodar a aplicação em ambiente de desenvolvimento ou produção.
 
 1. Importe as requisições no seu programa de API Client(Postman, Insomnia, etc.) usando o arquivo `assets/RestAPIExample.collection.json`;
-2. Crie um database com o nome de `restapiexample`;
-3. Execute `npm i` para instalar as dependências;
-4. Execute `npm run up` para popular o banco com a migration;
-5. Para iniciar o servidor em ambiente de produção, use: `npm start`. Para desenvolvimento, use: `npm run start:dev` e...
+2. Altere as variáveis `DATABASE_URL`e `TEST_DATABASE_URL` no arquivo `config.env` com as credenciais do seu banco de dados.
+3. Crie um database com o nome de `restapiexample`;
+4. Execute `npm i` para instalar as dependências;
+5. Execute `npm run up` para popular o banco com a migration;
+6. Para iniciar o servidor em ambiente de produção, use: `npm start`. Para desenvolvimento, use: `npm run start:dev` e...
    ...pronto! Sua aplicação já está pronta! \\(^o^)/
 
 ## Testes
