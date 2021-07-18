@@ -34,8 +34,8 @@ Passo a passo para rodar testes da aplicação.
 `https://hub.docker.com/r/lucassodrem/rest-api-example`
 
 1. Execute o comando `docker-compose up` para baixar as imagens e executar os containers;
-2. Liste seus containers usando `docker container ls` para pegar o containerID da imagem `lucassodrem/rest-api-example:db`.
-3. Após pegar o container ID, acesse o container usando `docker exec -it \[containerID\] bash`.
+2. Liste seus containers usando `docker container ls` para pegar o `containerID` da imagem `lucassodrem/rest-api-example:db`.
+3. Após pegar o container ID, acesse o container usando `docker exec -it [containerID] bash`.
 4. Use `psql -U postgres` para acessar o psql, depois crie um database chamado `restapiexample`e outro chamado `testrestapiexample`;
 5. Execute o passo **1** novamente e execute o comando `npm run up:docker` dentro do app `restapiexample/restapiexample_app_1` para rodar a migration e...
 
